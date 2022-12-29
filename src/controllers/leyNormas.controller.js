@@ -38,7 +38,27 @@ export const getLeyNormasByCodTipo = async (req, res) => {
       .input("CodTipo", codTipo)
       .query(queries.getLeyNormasByCodTipo);
 
-    res.send(result.recordset[0]);
+    const treeLeyNormas = await Promise.all(
+      result.recordset.map(async (record, i) => {
+        const children_result = await pool
+          .request()
+          .input("CodNorma", record.COD_NORMA)
+          .query(queries.getLeyComponentesByCodNorma);
+
+        return {
+          value: `Ley-${record.COD_NORMA}`,
+          label: record.DES_TITULO,
+          children: children_result.recordset.map((child, c) => {
+            return {
+              value: `${record.COD_NORMA}-${child.COD_DETALLE}`,
+              label: child.DES_TITULO,
+              children: [],
+            };
+          }),
+        };
+      })
+    );
+    res.send(treeLeyNormas);
   } catch (error) {
     res.status(500);
     res.send(error.message);

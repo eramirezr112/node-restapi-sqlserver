@@ -65,6 +65,33 @@ export const getLeyNormasByCodTipo = async (req, res) => {
   }
 };
 
+export const getChildrenByCodNormaAndCodPadre = async (req, res) => {
+  try {
+    const { codNorma, codDetalle } = req.params;
+
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("CodNorma", codNorma)
+      .input("CodDetalle", codDetalle)
+      .query(queries.getLeyComponentesByCodNormaAndCodPadre);
+
+    const treeChildren = await Promise.all(
+      result.recordset.map(async (record, i) => {
+        return {
+          value: `${codNorma}-${record.COD_DETALLE}`,
+          label: record.DES_TITULO,
+          children: [],
+        };
+      })
+    );
+    res.send(treeChildren);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
 export const getTotalLeyNormas = async (req, res) => {
   const pool = await getConnection();
   const result = await pool.request().query(queries.getTotalLeyNormas);

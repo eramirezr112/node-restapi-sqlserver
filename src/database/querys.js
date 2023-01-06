@@ -14,4 +14,11 @@ export const queries = {
                                   AND ( ( LNC.COD_NORMA = @CodNorma) 
                                   AND ( LNC.COD_PADRE is null ) ) 
                                 ORDER BY LC.NUM_NIVEL ASC, LC.NUM_ORDEN ASC`,
+  getLeyComponentesByCodNormaAndCodPadre: `SELECT LNC.DES_TITULO, LNC.COD_DETALLE 
+                                           FROM LEY_NORMAS_COMPONENTES as LNC, LEY_COMPONENTES as LC 
+                                           WHERE ( LC.COD_COMPONENTE = LNC.COD_COMPONENTE ) 
+                                               AND ( 
+                                                 ( LNC.COD_NORMA = @CodNorma ) AND ( LNC.COD_PADRE = @CodDetalle ) 
+                                               ) 
+                                           ORDER BY LC.NUM_NIVEL ASC, LC.NUM_ORDEN ASC`,
 };

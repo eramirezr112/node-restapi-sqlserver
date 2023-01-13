@@ -48,6 +48,7 @@ export const getLeyNormasByCodTipo = async (req, res) => {
         return {
           value: `Ley-${record.COD_NORMA}`,
           label: record.DES_TITULO,
+          isParentRoot: true,
           children: children_result.recordset.map((child, c) => {
             return {
               value: `${record.COD_NORMA}-${child.COD_DETALLE}`,

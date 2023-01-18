@@ -21,4 +21,11 @@ export const queries = {
                                                  ( LNC.COD_NORMA = @CodNorma ) AND ( LNC.COD_PADRE = @CodDetalle ) 
                                                ) 
                                            ORDER BY LC.NUM_NIVEL ASC, LC.NUM_ORDEN ASC`,
+  getContenidoByCodNorma: `SELECT LEY_NORMAS.FEC_PUBLICACION, LEY_NORMAS.DES_DESCRIPCION, LEY_NORMAS.NUM_NORMA 
+                                        FROM LEY_NORMAS 
+                                        WHERE LEY_NORMAS.COD_NORMA = @CodNorma`,
+  getContenidoByCodNormaAndCodDetalle: `SELECT LEY_NORMAS_COMPONENTES.DES_TITULO, LEY_NORMAS_COMPONENTES.DES_DESCRIPCION 
+                                                   FROM LEY_NORMAS_COMPONENTES 
+                                                   WHERE LEY_NORMAS_COMPONENTES.COD_NORMA = @CodNorma 
+                                                    AND LEY_NORMAS_COMPONENTES.COD_DETALLE = @CodDetalle`,
 };

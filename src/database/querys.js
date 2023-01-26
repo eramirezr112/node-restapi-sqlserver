@@ -4,7 +4,8 @@ export const queries = {
   getLeyNormasByCodTipo:
     "SELECT COD_NORMA, DES_TITULO FROM LEY_NORMAS WHERE COD_TIPO = @CodTipo ORDER BY NUM_NORMA ASC, DES_TITULO ASC",
   getTotalLeyNormas: "SELECT COUNT(*) as total FROM LEY_NORMAS",
-  getAllLeyNormasTipos: "SELECT COD_TIPO, DES_TIPO FROM LEY_NORMAS_TIPOS",
+  getAllLeyNormasTipos:
+    "SELECT COD_TIPO, DES_TIPO, DESCRIPCION FROM LEY_NORMAS_TIPOS",
   getLeyNormasTiposById:
     "SELECT * FROM LEY_NORMAS_TIPOS WHERE COD_TIPO = @CodTipo",
   getTotalLeyNormasTipos: "SELECT COUNT(*) as total FROM LEY_NORMAS_TIPOS",
